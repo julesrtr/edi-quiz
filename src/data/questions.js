@@ -266,4 +266,122 @@ const videos = [
   },
 ];
 
-export { situations, videos };
+// ── Final synthesis page content ──
+const finalSynthesis = {
+  hero: {
+    title: 'Ce que ces 4 situations révèlent',
+    subtitle:
+      'Ces 4 situations montrent qu\'une équipe peut sembler efficace, polie et fonctionnelle, tout en reproduisant des déséquilibres discrets dans la prise de parole, la répartition des tâches, la prise en compte des contraintes et la reconnaissance des différences.',
+  },
+  blindSpots: [
+    {
+      icon: '💬',
+      title: 'Le silence n\'est pas toujours un signe d\'inclusion',
+      body: 'L\'absence de désaccord ne signifie pas l\'adhésion. Dans beaucoup d\'équipes, certaines voix restent silencieuses non par choix, mais parce que l\'espace de parole est déjà occupé.',
+    },
+    {
+      icon: '⚖️',
+      title: 'Traiter tout le monde pareil ne garantit pas l\'équité',
+      body: 'Des règles identiques pour tous peuvent créer des inégalités invisibles. Quand une contrainte personnelle est ignorée au profit de la norme du groupe, l\'exclusion prend une forme silencieuse.',
+    },
+    {
+      icon: '🔀',
+      title: 'Une différence n\'a d\'effet que si elle peut réellement influencer le groupe',
+      body: 'Accueillir la diversité ne suffit pas. Si les idées différentes sont systématiquement écartées au profit des habitudes, la richesse des perspectives reste théorique.',
+    },
+    {
+      icon: '📋',
+      title: 'Le travail invisible n\'est pas une contribution mineure',
+      body: 'La coordination, l\'organisation et le suivi sont essentiels au fonctionnement collectif. Quand ces tâches reposent toujours sur les mêmes personnes sans être reconnues, un déséquilibre structurel s\'installe.',
+    },
+  ],
+  weakSignals: {
+    title: 'Signaux faibles à repérer',
+    intro:
+      'Ces situations ne sont pas des cas extrêmes. Elles se manifestent au quotidien, souvent sans que personne ne les nomme.',
+    signals: [
+      'Les mêmes personnes prennent la parole et concluent les discussions.',
+      'Certaines tâches reviennent toujours aux mêmes, sans rotation ni reconnaissance.',
+      'Une contrainte personnelle est connue, mais rarement prise en compte dans l\'organisation.',
+      'Une proposition différente est entendue poliment, puis rapidement abandonnée.',
+      'Tout le monde semble d\'accord, mais seuls quelques membres influencent réellement les décisions.',
+      'Le fonctionnement de l\'équipe n\'est jamais remis en question collectivement.',
+    ],
+  },
+  whyItMatters: {
+    title: 'Pourquoi cela compte dans une équipe',
+    intro:
+      'Ces angles morts ne sont pas des questions théoriques. Ils affectent directement la qualité du travail collaboratif.',
+    points: [
+      {
+        label: 'Participation',
+        text: 'Quand l\'espace de parole est inégalement réparti, certains membres cessent de contribuer, réduisant la diversité des perspectives disponibles.',
+      },
+      {
+        label: 'Qualité des décisions',
+        text: 'Des décisions prises sans véritable participation collective reposent sur un nombre limité de points de vue et sont souvent moins solides.',
+      },
+      {
+        label: 'Reconnaissance des contributions',
+        text: 'Le travail invisible, non reconnu, crée un déséquilibre qui affaiblit la motivation et le sentiment d\'appartenance.',
+      },
+      {
+        label: 'Climat d\'équipe',
+        text: 'Quand les contraintes individuelles sont ignorées ou les différences écartées, la confiance s\'érode progressivement, même en l\'absence de conflit ouvert.',
+      },
+      {
+        label: 'Collaboration réelle',
+        text: 'Une équipe peut fonctionner sans collaborer réellement. Le travail d\'équipe effectif exige que chaque membre ait les conditions de participer, pas seulement l\'invitation à le faire.',
+      },
+    ],
+  },
+  reflexes: {
+    title: '3 réflexes à garder en tête',
+    items: [
+      {
+        number: '01',
+        title: 'Rendre visibles les tâches invisibles',
+        text: 'Identifier, nommer et redistribuer le travail de coordination qui fait tenir l\'équipe au quotidien.',
+      },
+      {
+        number: '02',
+        title: 'Vérifier les conditions réelles de participation',
+        text: 'Ne pas se contenter de l\'absence de plainte. S\'assurer que chaque personne dispose d\'un espace concret pour contribuer.',
+      },
+      {
+        number: '03',
+        title: 'Créer un espace où les différences peuvent influencer le collectif',
+        text: 'Passer de l\'écoute polie à l\'intégration réelle des perspectives différentes dans les décisions et les méthodes de travail.',
+      },
+    ],
+  },
+  researchInsights: {
+    title: 'Ce que la recherche aide à comprendre',
+    cards: [
+      {
+        text: 'L\'inclusion ne dépend pas seulement de l\'absence de conflit visible, mais de la possibilité réelle qu\'a chaque personne de contribuer aux décisions et aux processus du groupe.',
+        source: 'Shore et al., 2011',
+      },
+      {
+        text: 'Des normes implicites de fonctionnement peuvent favoriser systématiquement les membres déjà les plus à l\'aise, renforçant les inégalités de participation sans que le groupe en ait conscience.',
+        source: 'Ely & Thomas, 2001',
+      },
+      {
+        text: 'Une équipe peut sembler performante à court terme tout en affaiblissant progressivement la participation et l\'engagement de certains de ses membres.',
+        source: 'Edmondson, 1999',
+      },
+    ],
+  },
+  sources: {
+    title: 'Sources mobilisées',
+    references: [
+      'Shore, L. M., Randel, A. E., Chung, B. G., Dean, M. A., Ehrhart, K. H., & Singh, G. (2011). Inclusion and Diversity in Work Groups. Journal of Management, 37(4), 1262–1289.',
+      'Ely, R. J., & Thomas, D. A. (2001). Cultural Diversity at Work: The Effects of Diversity Perspectives on Work Group Processes and Outcomes. Administrative Science Quarterly, 46(2), 229–273.',
+      'Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350–383.',
+      'Nembhard, I. M., & Edmondson, A. C. (2006). Making It Safe: The Effects of Leader Inclusiveness and Professional Status on Psychological Safety. Journal of Organizational Behavior, 27(7), 941–966.',
+      'van Knippenberg, D., De Dreu, C. K. W., & Homan, A. C. (2004). Work Group Diversity and Group Performance. Psychological Bulletin, 130(6), 741–764.',
+    ],
+  },
+};
+
+export { situations, videos, finalSynthesis };
