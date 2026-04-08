@@ -90,13 +90,56 @@ function SituationSelectPage({ onSelect, completedIds = [] }) {
 function ScenarioPage({ situation, onBack }) {
   return (
     <div className="scenario-container">
-      <div className="scenario-card">
-        <button className="scenario-back" onClick={onBack}>← Retour aux situations</button>
-        <h2 className="scenario-title">{situation.title}</h2>
-        <p className="scenario-desc">{situation.description}</p>
-        <div className="scenario-placeholder">
-          <p>Le contenu de cette situation sera bientôt disponible.</p>
-        </div>
+      {/* Back navigation */}
+      <button className="scenario-back" onClick={onBack}>
+        ← Retour aux situations
+      </button>
+
+      {/* Hero image area */}
+      <div className="scenario-hero">
+        {situation.image ? (
+          <img
+            src={situation.image}
+            alt={situation.title}
+            className="scenario-hero-img"
+          />
+        ) : (
+          <div className="scenario-hero-placeholder">
+            <span className="scenario-hero-icon" aria-hidden="true">
+              {situation.icon}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Situation label + title */}
+      <div className="scenario-header">
+        <span className="scenario-label">Situation</span>
+        <h1 className="scenario-title">{situation.title}</h1>
+      </div>
+
+      {/* Context paragraph — the immersive narrative */}
+      <div className="scenario-context">
+        <p>{situation.context}</p>
+      </div>
+
+      {/* Prompt */}
+      <p className="scenario-prompt">{situation.prompt}</p>
+
+      {/* Choices — 3 realistic team reflexes */}
+      <div className="scenario-choices">
+        {situation.choices.map((choice, index) => (
+          <button
+            key={choice.id}
+            className="scenario-choice"
+            style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+          >
+            <span className="scenario-choice-letter">
+              {String.fromCharCode(65 + index)}
+            </span>
+            <span className="scenario-choice-text">{choice.text}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
