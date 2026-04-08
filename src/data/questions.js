@@ -375,11 +375,9 @@ const finalSynthesis = {
   sources: {
     title: 'Sources mobilisées',
     references: [
-      'Shore, L. M., Randel, A. E., Chung, B. G., Dean, M. A., Ehrhart, K. H., & Singh, G. (2011). Inclusion and Diversity in Work Groups. Journal of Management, 37(4), 1262–1289.',
-      'Ely, R. J., & Thomas, D. A. (2001). Cultural Diversity at Work: The Effects of Diversity Perspectives on Work Group Processes and Outcomes. Administrative Science Quarterly, 46(2), 229–273.',
-      'Edmondson, A. (1999). Psychological Safety and Learning Behavior in Work Teams. Administrative Science Quarterly, 44(2), 350–383.',
-      'Nembhard, I. M., & Edmondson, A. C. (2006). Making It Safe: The Effects of Leader Inclusiveness and Professional Status on Psychological Safety. Journal of Organizational Behavior, 27(7), 941–966.',
-      'van Knippenberg, D., De Dreu, C. K. W., & Homan, A. C. (2004). Work Group Diversity and Group Performance. Psychological Bulletin, 130(6), 741–764.',
+      'M. L. Wang, A. S. Gomes, M. Rosa, P. Copeland, and V. J. Santana, “A systematic review of diversity, equity, and inclusion and antiracism training studies: Findings and future directions,” Translational Behavioral Medicine, vol. 14, no. 3, pp. 156–171, 2024. [Online]. Available: https://pmc.ncbi.nlm.nih.gov/articles/PMC10890819/ ',
+      'V. Hunt, S. Prince, S. Dixon-Fyle, and K. Dolan, Diversity Wins: How Inclusion Matters. McKinsey & Company, 2020. [Online]. Available: https://www.mckinsey.com/~/media/mckinsey/featured%20insights/diversity%20and%20inclusion/diversity%20wins%20how%20inclusion%20matters/diversity-wins-how-inclusion-matters-vf.pdf ',
+      'Observatoire sur la réussite en enseignement supérieur, Équité, diversité et inclusion (EDI) : au cœur de la réussite étudiante. Québec, QC, Canada: ORES, 2023. [Online]. Available: https://oresquebec.ca/wp-content/uploads/2023/07/EDI-au-coeur-de-la-reussite-etudiante_Dossier_2023.pdf',
     ],
   },
 };
