@@ -1,8 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-import { questions, videos } from './data/questions';
-
-const OPTION_LABELS = ['A', 'B', 'C', 'D'];
+import { situations } from './data/questions';
 
 function FloatingShapes() {
   return (
@@ -15,33 +13,22 @@ function FloatingShapes() {
   );
 }
 
-function Confetti() {
-  const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#667eea', '#764ba2', '#ff9ff3'];
-  const pieces = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    left: Math.random() * 100,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    delay: Math.random() * 2,
-    duration: 2 + Math.random() * 2,
-    size: 6 + Math.random() * 8,
-  }));
-
+// Mascot moods: 'happy' | 'thinking' | 'concerned' | 'great'
+// Only 'happy' is used for now; other moods will be wired to team indicators later.
+function Mascot({ mood = 'happy' }) {
   return (
-    <div className="confetti-container">
-      {pieces.map((p) => (
-        <div
-          key={p.id}
-          className="confetti"
-          style={{
-            left: `${p.left}%`,
-            backgroundColor: p.color,
-            animationDelay: `${p.delay}s`,
-            '--fall-duration': `${p.duration}s`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-          }}
-        />
-      ))}
+    <div className="mascot" aria-label="Mascot" role="img">
+      <div className="mascot-head">
+        <div className="mascot-eyes">
+          <div className="mascot-eye" />
+          <div className="mascot-eye" />
+        </div>
+        <div className="mascot-mouth" />
+        <div className="mascot-cheeks">
+          <div className="mascot-cheek" />
+          <div className="mascot-cheek" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -49,9 +36,12 @@ function Confetti() {
 function LandingPage({ onStart }) {
   return (
     <div className="landing">
-      <h1 className="landing-logo">EDI Quiz</h1>
+      <Mascot mood="happy" />
+      <h1 className="landing-logo">Angles morts</h1>
       <p className="landing-subtitle">
-        Teste tes connaissances et apprends en t'amusant !
+        Des équipes peuvent sembler efficaces, polies et fonctionnelles,<br />
+        tout en reproduisant des angles morts d'équité, de diversité et d'inclusion.<br />
+        Explore 4 situations réalistes et vois ce que chaque réflexe change dans l'équipe !
       </p>
       <button className="start-btn" onClick={onStart}>
         Commencer
@@ -60,114 +50,53 @@ function LandingPage({ onStart }) {
   );
 }
 
-function QuizPage({ question, questionIndex, totalQuestions, onAnswer, selectedAnswer, showExplanation, onNext }) {
-  const progress = ((questionIndex) / totalQuestions) * 100;
-
+function SituationSelectPage({ onSelect, completedIds = [] }) {
   return (
-    <div className="quiz-container">
-      <div className="progress-section">
-        <div className="progress-info">
-          <span className="progress-text">Progression</span>
-          <span className="progress-counter">
-            {questionIndex + 1} / {totalQuestions}
-          </span>
-        </div>
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progress}%` }} />
-        </div>
+    <div className="situations-container">
+      <div className="situations-header">
+        <h1 className="situations-title">Choisis une situation</h1>
       </div>
 
-      <div className="question-card" key={question.id}>
-        <h2 className="question-text">{question.question}</h2>
-
-        <div className="options-grid">
-          {question.options.map((option, index) => {
-            let className = 'option-btn';
-            if (selectedAnswer !== null) {
-              className += ' disabled';
-              if (index === selectedAnswer) {
-                className += option.correct ? ' correct selected' : ' wrong selected';
-              } else if (option.correct) {
-                className += ' correct';
-              }
-            }
-
-            return (
-              <button
-                key={index}
-                className={className}
-                onClick={() => selectedAnswer === null && onAnswer(index)}
-              >
-                <span className="option-icon">{OPTION_LABELS[index]}</span>
-                <span>{option.text}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {showExplanation && (
-          <div className="explanation-box">
-            <div className="explanation-title">Explication</div>
-            <p className="explanation-text">{question.explanation}</p>
-          </div>
-        )}
-
-        {showExplanation && (
-          <button className="next-btn" onClick={onNext}>
-            {questionIndex + 1 < totalQuestions ? 'Question suivante' : 'Voir les résultats'}
-          </button>
-        )}
+      <div className="situations-grid">
+        {situations.map((situation, index) => {
+          const done = completedIds.includes(situation.id);
+          return (
+            <button
+              key={situation.id}
+              className={`situation-card${done ? ' completed' : ''}`}
+              onClick={() => onSelect(situation.id)}
+              style={{ '--card-accent': situation.color }}
+            >
+              <div className="situation-card-header">
+                <span className="situation-number">Situation {index + 1}</span>
+                {done && (
+                  <span className="situation-check" aria-label="Complétée">✓</span>
+                )}
+              </div>
+              <span className="situation-icon" aria-hidden="true">{situation.icon}</span>
+              <div className="situation-content">
+                <h3 className="situation-card-title">{situation.title}</h3>
+                <p className="situation-card-desc">{situation.description}</p>
+              </div>
+              <span className="situation-card-cta">Explorer →</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function ResultsPage({ score, total, onRestart }) {
-  const percent = Math.round((score / total) * 100);
-  let message;
-  if (percent === 100) message = 'Score parfait ! Tu gères !';
-  else if (percent >= 75) message = 'Très bien joué ! Continue comme ça !';
-  else if (percent >= 50) message = 'Pas mal ! Tu peux encore progresser !';
-  else message = 'Continue d\'apprendre, tu vas y arriver !';
-
+function ScenarioPage({ situation, onBack }) {
   return (
-    <div className="results-container">
-      <Confetti />
-      <div className="results-card">
-        <h2 className="results-title">Résultats</h2>
-
-        <div className="score-circle" style={{ '--score-percent': `${percent}%` }}>
-          <div className="score-circle-inner">
-            <span className="score-percent">{percent}%</span>
-            <span className="score-label">Score</span>
-          </div>
+    <div className="scenario-container">
+      <div className="scenario-card">
+        <button className="scenario-back" onClick={onBack}>← Retour aux situations</button>
+        <h2 className="scenario-title">{situation.title}</h2>
+        <p className="scenario-desc">{situation.description}</p>
+        <div className="scenario-placeholder">
+          <p>Le contenu de cette situation sera bientôt disponible.</p>
         </div>
-
-        <div className="results-score">
-          {score} / {total}
-        </div>
-        <p className="results-message">{message}</p>
-
-        {videos.length > 0 && (
-          <div className="videos-section">
-            <h3 className="videos-title">Pour aller plus loin</h3>
-            {videos.map((video, i) => (
-              <div key={i} className="video-card">
-                <div className="video-card-title">{video.title}</div>
-                <iframe
-                  src={video.url}
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        <button className="restart-btn" onClick={onRestart}>
-          Recommencer
-        </button>
       </div>
     </div>
   );
@@ -175,54 +104,37 @@ function ResultsPage({ score, total, onRestart }) {
 
 function App() {
   const [screen, setScreen] = useState('landing');
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [score, setScore] = useState(0);
+  const [selectedSituation, setSelectedSituation] = useState(null);
+  const [completedIds, setCompletedIds] = useState([]);
 
   const handleStart = useCallback(() => {
-    setScreen('quiz');
-    setQuestionIndex(0);
-    setScore(0);
-    setSelectedAnswer(null);
-    setShowExplanation(false);
+    setScreen('situations');
   }, []);
 
-  const handleAnswer = useCallback((index) => {
-    setSelectedAnswer(index);
-    if (questions[questionIndex].options[index].correct) {
-      setScore((s) => s + 1);
-    }
-    setTimeout(() => setShowExplanation(true), 600);
-  }, [questionIndex]);
+  const handleSelectSituation = useCallback((id) => {
+    setSelectedSituation(situations.find((s) => s.id === id));
+    setScreen('scenario');
+  }, []);
 
-  const handleNext = useCallback(() => {
-    if (questionIndex + 1 < questions.length) {
-      setQuestionIndex((i) => i + 1);
-      setSelectedAnswer(null);
-      setShowExplanation(false);
-    } else {
-      setScreen('results');
-    }
-  }, [questionIndex]);
+  // Call this when a scenario is finished to mark it complete
+  const handleCompleteSituation = useCallback((id) => {
+    setCompletedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  }, []);
+
+  const handleBackToSituations = useCallback(() => {
+    setSelectedSituation(null);
+    setScreen('situations');
+  }, []);
 
   return (
     <div className="app">
       <FloatingShapes />
       {screen === 'landing' && <LandingPage onStart={handleStart} />}
-      {screen === 'quiz' && (
-        <QuizPage
-          question={questions[questionIndex]}
-          questionIndex={questionIndex}
-          totalQuestions={questions.length}
-          onAnswer={handleAnswer}
-          selectedAnswer={selectedAnswer}
-          showExplanation={showExplanation}
-          onNext={handleNext}
-        />
+      {screen === 'situations' && (
+        <SituationSelectPage onSelect={handleSelectSituation} completedIds={completedIds} />
       )}
-      {screen === 'results' && (
-        <ResultsPage score={score} total={questions.length} onRestart={handleStart} />
+      {screen === 'scenario' && selectedSituation && (
+        <ScenarioPage situation={selectedSituation} onBack={handleBackToSituations} />
       )}
     </div>
   );

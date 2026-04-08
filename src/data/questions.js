@@ -1,53 +1,53 @@
-// Questions EDI - À remplacer avec tes propres questions
-const questions = [
+// Situations EDI — 4 cas réalistes d'angles morts en équipe
+const situations = [
   {
     id: 1,
-    question: "Question exemple 1 — Remplace-moi avec ta vraie question !",
-    options: [
-      { text: "Réponse A", correct: false },
-      { text: "Réponse B", correct: true },
-      { text: "Réponse C", correct: false },
-      { text: "Réponse D", correct: false },
-    ],
-    explanation:
-      "Explication : La réponse B est correcte parce que... (ajoute ton explication ici)",
+    title: 'Tout le monde est d\'accord… vraiment ?',
+    description:
+      'Deux membres proposent vite des idées et les autres suivent sans trop réagir.',
+    icon: '💬',
+    tag: 'Inclusion',
+    color: '#c4956a',
   },
   {
     id: 2,
-    question: "Question exemple 2 — Remplace-moi !",
-    options: [
-      { text: "Réponse A", correct: true },
-      { text: "Réponse B", correct: false },
-      { text: "Réponse C", correct: false },
-      { text: "Réponse D", correct: false },
-    ],
-    explanation:
-      "Explication : La réponse A est correcte parce que... (ajoute ton explication ici)",
+    title: 'Un horaire efficace pour qui ?',
+    description:
+      'La majorité est disponible, mais un membre participe de moins en moins.',
+    icon: '🕐',
+    tag: 'Équité',
+    color: '#b07d62',
   },
   {
     id: 3,
-    question: "Question exemple 3 — Remplace-moi !",
-    options: [
-      { text: "Réponse A", correct: false },
-      { text: "Réponse B", correct: false },
-      { text: "Réponse C", correct: true },
-      { text: "Réponse D", correct: false },
-    ],
-    explanation:
-      "Explication : La réponse C est correcte parce que... (ajoute ton explication ici)",
+    title: 'La personne "fiable"',
+    description:
+      'La même personne organise, corrige et relance toujours le groupe.',
+    icon: '📋',
+    tag: 'Équité + inclusion',
+    color: '#8a9a6c',
+  },
+  {
+    id: 4,
+    title: 'Une autre façon de faire',
+    description:
+      'Une méthode différente est proposée, mais rejetée parce qu\'elle sort des habitudes.',
+    icon: '🔀',
+    tag: 'Diversité',
+    color: '#c9a84c',
   },
 ];
 
-// Vidéos de sensibilisation — ajoute tes URLs YouTube ici
+// Vidéos de sensibilisation — conservées pour usage futur
 const videos = [
   {
-    title: "Vidéo de sensibilisation 1",
-    url: "https://www.youtube.com/embed/REMPLACE_MOI",
+    title: 'Vidéo de sensibilisation 1',
+    url: 'https://www.youtube.com/embed/REMPLACE_MOI',
   },
   {
-    title: "Vidéo de sensibilisation 2",
-    url: "https://www.youtube.com/embed/REMPLACE_MOI",
+    title: 'Vidéo de sensibilisation 2',
+    url: 'https://www.youtube.com/embed/REMPLACE_MOI',
   },
 ];
 
-export { questions, videos };
+export { situations, videos };
