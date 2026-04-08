@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import './App.css';
 import { situations } from './data/questions';
 
@@ -14,16 +14,16 @@ function FloatingShapes() {
 }
 
 // Mascot moods: 'happy' | 'thinking' | 'concerned' | 'great'
-// Only 'happy' is used for now; other moods will be wired to team indicators later.
-function Mascot({ mood = 'happy' }) {
+function Mascot({ mood = 'happy', size = 'normal' }) {
+  const sizeClass = size === 'small' ? 'mascot--small' : '';
   return (
-    <div className="mascot" aria-label="Mascot" role="img">
-      <div className="mascot-head">
+    <div className={`mascot ${sizeClass}`} aria-label="Mascot" role="img">
+      <div className={`mascot-head mascot-mood-${mood}`}>
         <div className="mascot-eyes">
-          <div className="mascot-eye" />
-          <div className="mascot-eye" />
+          <div className={`mascot-eye ${mood === 'concerned' ? 'mascot-eye--worried' : ''}`} />
+          <div className={`mascot-eye ${mood === 'concerned' ? 'mascot-eye--worried' : ''}`} />
         </div>
-        <div className="mascot-mouth" />
+        <div className={`mascot-mouth mascot-mouth--${mood}`} />
         <div className="mascot-cheeks">
           <div className="mascot-cheek" />
           <div className="mascot-cheek" />
@@ -87,7 +87,91 @@ function SituationSelectPage({ onSelect, completedIds = [] }) {
   );
 }
 
-function ScenarioPage({ situation, onBack }) {
+/* ---- Team indicators bar ---- */
+function TeamIndicators({ values, animate }) {
+  const labels = [
+    { key: 'participation', label: 'Participation' },
+    { key: 'equite', label: 'Équité' },
+    { key: 'inclusion', label: 'Inclusion' },
+    { key: 'climat', label: 'Climat' },
+  ];
+  return (
+    <div className={`team-indicators ${animate ? 'team-indicators--visible' : ''}`}>
+      {labels.map(({ key, label }) => (
+        <div className="indicator" key={key}>
+          <div className="indicator-label">{label}</div>
+          <div className="indicator-track">
+            <div
+              className="indicator-fill"
+              style={{ width: animate ? `${values[key]}%` : '0%' }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---- Understanding section with 3 tabs ---- */
+function UnderstandingSection({ choice }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const tabs = [
+    { key: 'edi', label: 'Lecture EDI', content: choice.edi },
+    { key: 'teamwork', label: 'Effet sur l\'équipe', content: choice.teamwork },
+    { key: 'practice', label: 'Meilleure pratique', content: choice.practice },
+  ];
+  return (
+    <div className="understanding">
+      <div className="understanding-tabs">
+        {tabs.map((tab, i) => (
+          <button
+            key={tab.key}
+            className={`understanding-tab ${activeTab === i ? 'understanding-tab--active' : ''}`}
+            onClick={() => setActiveTab(i)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="understanding-content">
+        <p>{tabs[activeTab].content}</p>
+      </div>
+    </div>
+  );
+}
+
+function ScenarioPage({ situation, onBack, onComplete }) {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [revealStage, setRevealStage] = useState(0);
+  const revealRef = useRef(null);
+
+  const handleChoiceClick = useCallback((choice) => {
+    if (selectedChoice && choice.id === selectedChoice.id) return; // already on this choice
+    setSelectedChoice(choice);
+    setRevealStage(0);
+    // Staggered reveal: 0 -> 1 -> 2 -> 3 -> 4
+    setTimeout(() => setRevealStage(1), 100);  // reaction + mascot + indicators
+    setTimeout(() => setRevealStage(2), 600);  // consequence cards
+    setTimeout(() => setRevealStage(3), 1100); // diagnosis
+    setTimeout(() => setRevealStage(4), 1600); // understanding + continue
+  }, [selectedChoice]);
+
+  // Scroll to reveal section when it appears
+  useEffect(() => {
+    if (revealStage === 1 && revealRef.current) {
+      setTimeout(() => {
+        revealRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    }
+  }, [revealStage]);
+
+  const handleContinue = useCallback(() => {
+    onComplete(situation.id);
+    onBack();
+  }, [onComplete, onBack, situation.id]);
+
+  const mascotMood = selectedChoice ? selectedChoice.mood : 'happy';
+
   return (
     <div className="scenario-container">
       {/* Back navigation */}
@@ -118,7 +202,7 @@ function ScenarioPage({ situation, onBack }) {
         <h1 className="scenario-title">{situation.title}</h1>
       </div>
 
-      {/* Context paragraph — the immersive narrative */}
+      {/* Context paragraph */}
       <div className="scenario-context">
         <p>{situation.context}</p>
       </div>
@@ -126,21 +210,84 @@ function ScenarioPage({ situation, onBack }) {
       {/* Prompt */}
       <p className="scenario-prompt">{situation.prompt}</p>
 
-      {/* Choices — 3 realistic team reflexes */}
+      {/* Choices */}
       <div className="scenario-choices">
         {situation.choices.map((choice, index) => (
           <button
             key={choice.id}
-            className="scenario-choice"
+            className={`scenario-choice ${
+              selectedChoice
+                ? choice.id === selectedChoice.id
+                  ? 'scenario-choice--selected'
+                  : 'scenario-choice--dimmed'
+                : ''
+            }`}
             style={{ animationDelay: `${0.08 + index * 0.06}s` }}
+            onClick={() => handleChoiceClick(choice)}
           >
             <span className="scenario-choice-letter">
               {String.fromCharCode(65 + index)}
             </span>
             <span className="scenario-choice-text">{choice.text}</span>
+            {selectedChoice && choice.id === selectedChoice.id && (
+              <span className="scenario-choice-selected-mark">●</span>
+            )}
           </button>
         ))}
       </div>
+
+      {/* ===== POST-CLICK REVEAL ===== */}
+      {selectedChoice && (
+        <div className="reveal" ref={revealRef}>
+
+          {/* Layer 1: Mascot + Indicators + Immediate reaction */}
+          <div className={`reveal-layer ${revealStage >= 1 ? 'reveal-layer--visible' : ''}`}>
+            <div className="reveal-reaction-row">
+              <Mascot mood={mascotMood} size="small" />
+              <p className="reveal-reaction-text">{selectedChoice.reaction}</p>
+            </div>
+            <TeamIndicators
+              values={selectedChoice.indicators}
+              animate={revealStage >= 1}
+            />
+          </div>
+
+          {/* Layer 2: Consequence cards */}
+          <div className={`reveal-layer ${revealStage >= 2 ? 'reveal-layer--visible' : ''}`}>
+            <div className="reveal-section-label">Effets sur l'équipe</div>
+            <div className="consequence-cards">
+              {selectedChoice.consequences.map((text, i) => (
+                <div
+                  className="consequence-card"
+                  key={i}
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <span className="consequence-dot" />
+                  <p>{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Layer 3: Diagnosis */}
+          <div className={`reveal-layer ${revealStage >= 3 ? 'reveal-layer--visible' : ''}`}>
+            <div className="diagnosis-card">
+              <span className="diagnosis-label">Angle mort détecté</span>
+              <p className="diagnosis-text">{selectedChoice.diagnosis}</p>
+            </div>
+          </div>
+
+          {/* Layer 4: Understanding + Continue */}
+          <div className={`reveal-layer ${revealStage >= 4 ? 'reveal-layer--visible' : ''}`}>
+            <UnderstandingSection choice={selectedChoice} />
+            <div className="reveal-continue">
+              <button className="reveal-continue-btn" onClick={handleContinue}>
+                Explorer une autre situation
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -177,7 +324,7 @@ function App() {
         <SituationSelectPage onSelect={handleSelectSituation} completedIds={completedIds} />
       )}
       {screen === 'scenario' && selectedSituation && (
-        <ScenarioPage situation={selectedSituation} onBack={handleBackToSituations} />
+        <ScenarioPage situation={selectedSituation} onBack={handleBackToSituations} onComplete={handleCompleteSituation} />
       )}
     </div>
   );
