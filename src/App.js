@@ -37,8 +37,9 @@ function LandingPage({ onStart }) {
   return (
     <div className="landing">
       <Mascot mood="happy" />
-      <h1 className="landing-logo">Angles morts</h1>
+      <h1 className="landing-logo">Zone Aveugle</h1>
       <p className="landing-subtitle">
+        Ce que les autres connaissent de moi, mais dont moi je n'ai pas connaissance.<br />
         Des équipes peuvent sembler efficaces, polies et fonctionnelles,<br />
         tout en reproduisant des angles morts d'équité, de diversité et d'inclusion.<br />
         Explore 4 situations réalistes et vois ce que chaque réflexe change dans l'équipe !
@@ -413,7 +414,13 @@ function SynthesisPage({ onBackToSituations, onBackToLanding }) {
         <h2 className="synthesis-section-title synthesis-sources-title">{data.sources.title}</h2>
         <ul className="synthesis-sources-list">
           {data.sources.references.map((ref, i) => (
-            <li key={i} className="synthesis-source-item">{ref}</li>
+            <li key={i} className="synthesis-source-item">
+            {ref.split(/(https?:\/\/[^\s]+)/g).map((part, j) =>
+              part.match(/^https?:\/\//) 
+                ? <a key={j} href={part.trim()} target="_blank" rel="noopener noreferrer">{part.trim()}</a>
+                : part
+            )}
+          </li>
           ))}
         </ul>
       </section>

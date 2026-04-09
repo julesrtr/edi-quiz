@@ -377,7 +377,7 @@ const finalSynthesis = {
     references: [
       'M. L. Wang, A. S. Gomes, M. Rosa, P. Copeland, and V. J. Santana, “A systematic review of diversity, equity, and inclusion and antiracism training studies: Findings and future directions,” Translational Behavioral Medicine, vol. 14, no. 3, pp. 156–171, 2024. [Online]. Available: https://pmc.ncbi.nlm.nih.gov/articles/PMC10890819/ ',
       'V. Hunt, S. Prince, S. Dixon-Fyle, and K. Dolan, Diversity Wins: How Inclusion Matters. McKinsey & Company, 2020. [Online]. Available: https://www.mckinsey.com/~/media/mckinsey/featured%20insights/diversity%20and%20inclusion/diversity%20wins%20how%20inclusion%20matters/diversity-wins-how-inclusion-matters-vf.pdf ',
-      'Observatoire sur la réussite en enseignement supérieur, Équité, diversité et inclusion (EDI) : au cœur de la réussite étudiante. Québec, QC, Canada: ORES, 2023. [Online]. Available: https://oresquebec.ca/wp-content/uploads/2023/07/EDI-au-coeur-de-la-reussite-etudiante_Dossier_2023.pdf',
+      'Observatoire sur la réussite en enseignement supérieur, Équité, diversité et inclusion (EDI) : au cœur de la réussite étudiante. Québec, QC, Canada: ORES, 2023. [Online]. Available: https://oresquebec.ca/wp-content/uploads/2023/07/EDI-au-coeur-de-la-reussite-etudiante_Dossier_2023.pdf ',
     ],
   },
 };
