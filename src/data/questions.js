@@ -17,7 +17,7 @@ const situations = [
         id: 'a',
         text: 'Choisir le candidat X, car son expérience concrète garantit qu\'il sera opérationnel immédiatement (critère d\'efficacité).',
         mood: 'concerned',
-        indicators: { participation: 30, equite: 20, inclusion: 25, climat: 35 },
+        indicators: { participation: 30, equite: 20, inclusion: 25, perspectives: 30 },
         reaction: 'Le privilège socio-économique est récompensé.',
         consequences: [
           'Ce choix semble logique, mais il favorise le privilège socio-économique.',
@@ -33,7 +33,7 @@ const situations = [
         id: 'b',
         text: 'Faire le choix en prenant en compte le background des deux et pas seulement en se focalisant sur le CV.',
         mood: 'great',
-        indicators: { participation: 85, equite: 85, inclusion: 80, climat: 80 },
+        indicators: { participation: 85, equite: 85, inclusion: 80, perspectives: 70 },
         reaction: 'Le potentiel est évalué de manière juste.',
         consequences: [
           'L\'équipe reconnaît que le mérite ne se mesure pas uniquement à travers un CV.',
@@ -49,7 +49,7 @@ const situations = [
         id: 'c',
         text: 'Tirer au sort, puisque les deux ont des capacités intellectuelles prouvées par leurs notes.',
         mood: 'concerned',
-        indicators: { participation: 40, equite: 35, inclusion: 30, climat: 45 },
+        indicators: { participation: 40, equite: 35, inclusion: 30, perspectives: 35 },
         reaction: 'Le hasard remplace la réflexion.',
         consequences: [
           'Faire un choix sous l\'effet du hasard n\'est pas une approche rationnelle.',
@@ -80,7 +80,7 @@ const situations = [
         id: 'a',
         text: 'C\'est une décision qui privilégie l\'efficacité opérationnelle immédiate.',
         mood: 'concerned',
-        indicators: { participation: 30, equite: 25, inclusion: 20, climat: 35 },
+        indicators: { participation: 30, equite: 25, inclusion: 20, perspectives: 15 },
         reaction: 'L\'habitude est confondue avec l\'efficacité.',
         consequences: [
           'Ce que l\'équipe appelle « efficacité » est en réalité du conformisme déguisé.',
@@ -96,7 +96,7 @@ const situations = [
         id: 'b',
         text: 'C\'est un signe que la diversité de l\'équipe est sous-exploitée, voire ignorée.',
         mood: 'great',
-        indicators: { participation: 85, equite: 80, inclusion: 85, climat: 80 },
+        indicators: { participation: 85, equite: 80, inclusion: 85, perspectives: 90 },
         reaction: 'L\'angle mort est identifié.',
         consequences: [
           'La diversité, ce n\'est pas seulement avoir des personnes de différents horizons, c\'est intégrer leurs méthodes.',
@@ -112,7 +112,7 @@ const situations = [
         id: 'c',
         text: 'C\'est à la personne qui propose l\'idée de prouver par des chiffres que sa méthode est meilleure avant de déranger le groupe.',
         mood: 'concerned',
-        indicators: { participation: 25, equite: 20, inclusion: 15, climat: 30 },
+        indicators: { participation: 25, equite: 20, inclusion: 15, perspectives: 10 },
         reaction: 'La charge de la preuve repose sur la minorité.',
         consequences: [
           'Demander à une minorité de « travailler deux fois plus fort » pour justifier leur apport est une forme d\'iniquité.',
@@ -143,7 +143,7 @@ const situations = [
         id: 'a',
         text: 'C\'est un signe de haute maturité d\'équipe où la confiance mutuelle accélère les processus.',
         mood: 'concerned',
-        indicators: { participation: 25, equite: 30, inclusion: 20, climat: 40 },
+        indicators: { participation: 25, equite: 30, inclusion: 20, perspectives: 40 },
         reaction: 'L\'équipe confond confiance et conformité.',
         consequences: [
           'Le silence n\'est pas forcément un accord : il peut traduire de la pression ou un manque d\'espace pour réfléchir.',
@@ -159,7 +159,7 @@ const situations = [
         id: 'b',
         text: 'C\'est une opportunité manquée de vérifier si l\'équipe est réellement inclusive et robuste.',
         mood: 'great',
-        indicators: { participation: 85, equite: 80, inclusion: 85, climat: 80 },
+        indicators: { participation: 85, equite: 80, inclusion: 85, perspectives: 65 },
         reaction: 'L\'enjeu de diversité est reconnu.',
         consequences: [
           'L\'équipe a manqué l\'occasion de tester sa décision sous plusieurs angles.',
@@ -175,7 +175,7 @@ const situations = [
         id: 'c',
         text: 'C\'est la responsabilité de ceux qui se taisent de se manifester s\'ils voient une faille.',
         mood: 'concerned',
-        indicators: { participation: 20, equite: 25, inclusion: 15, climat: 30 },
+        indicators: { participation: 20, equite: 25, inclusion: 15, perspectives: 30 },
         reaction: 'La responsabilité est reportée sur les plus vulnérables.',
         consequences: [
           'Il est faux de penser que ceux qui se taisent doivent simplement parler.',
@@ -206,7 +206,7 @@ const situations = [
         id: 'a',
         text: 'L\'égalité, car Marc et Sara n\'ont pas reçu la même considération technique.',
         mood: 'concerned',
-        indicators: { participation: 35, equite: 30, inclusion: 30, climat: 40 },
+        indicators: { participation: 35, equite: 30, inclusion: 30, perspectives: 35 },
         reaction: 'Le problème est mal identifié.',
         consequences: [
           'L\'égalité traiterait Marc et Sara de la même façon, en faisant fi du contexte.',
@@ -222,7 +222,7 @@ const situations = [
         id: 'b',
         text: 'La diversité, car l\'équipe se prive d\'un nouveau regard sur la modélisation.',
         mood: 'happy',
-        indicators: { participation: 55, equite: 50, inclusion: 55, climat: 55 },
+        indicators: { participation: 55, equite: 50, inclusion: 55, perspectives: 50 },
         reaction: 'Un aspect est identifié, mais ce n\'est pas l\'enjeu central.',
         consequences: [
           'Bien que ce soit vrai, ce n\'est pas l\'enjeu central de cette situation.',
@@ -238,7 +238,7 @@ const situations = [
         id: 'c',
         text: 'L\'équité, car l\'équipe ignore la situation socio-économique qui influence les disponibilités de Marc.',
         mood: 'great',
-        indicators: { participation: 85, equite: 90, inclusion: 80, climat: 80 },
+        indicators: { participation: 85, equite: 90, inclusion: 80, perspectives: 55 },
         reaction: 'L\'angle mort structurel est identifié.',
         consequences: [
           'La littérature définit l\'équité comme la reconnaissance des besoins différenciés.',
@@ -287,7 +287,7 @@ const finalSynthesis = {
     {
       icon: '💬',
       title: 'Le silence n\'est pas un signe d\'accord',
-      body: 'Quand une décision est prise rapidement par quelques voix dominantes, le silence des autres n\'est pas de la confiance — c\'est souvent un manque d\'espace pour s\'exprimer. La rapidité n\'est pas synonyme de qualité.',
+      body: 'Quand une décision est prise rapidement par quelques voix dominantes, le silence des autres n\'est pas de la confiance, c\'est souvent un manque d\'espace pour s\'exprimer. La rapidité n\'est pas synonyme de qualité.',
     },
     {
       icon: '📋',
@@ -359,16 +359,16 @@ const finalSynthesis = {
     title: 'Ce que la recherche aide à comprendre',
     cards: [
       {
-        text: 'L\'inclusion ne dépend pas seulement de l\'absence de conflit visible, mais de la possibilité réelle qu\'a chaque personne de contribuer aux décisions et aux processus du groupe.',
-        source: 'Shore et al., 2011',
+        text: 'L\'inclusion ne repose pas seulement sur l\'absence de conflit, mais sur la possibilité réelle pour chacun et chacune de contribuer au fonctionnement du groupe.',
+        source: 'ORES, EDI au cœur de la réussite étudiante, 2023',
       },
       {
-        text: 'Les critères de sélection apparemment neutres (expérience, disponibilité, réseau) peuvent reproduire des inégalités structurelles en favorisant systématiquement les profils les plus privilégiés.',
-        source: 'Ely & Thomas, 2001',
+        text: 'L\'équité ne consiste pas à traiter tout le monde de manière identique, mais à tenir compte des réalités et des obstacles différents pour rendre la participation réellement juste.',
+        source: 'ORES, EDI au cœur de la réussite étudiante, 2023',
       },
       {
-        text: 'Une équipe qui valorise la rapidité de décision au détriment de la délibération collective affaiblit progressivement la participation et l\'engagement de ses membres les moins assertifs.',
-        source: 'Edmondson, 1999',
+        text: 'Les équipes qui accueillent réellement des perspectives diverses prennent souvent de meilleures décisions : la diversité n\'a d\'effet que si elle peut influencer le groupe.',
+        source: 'McKinsey & Company, Diversity Wins, 2020',
       },
     ],
   },

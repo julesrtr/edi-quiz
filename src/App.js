@@ -40,7 +40,7 @@ function LandingPage({ onStart }) {
       <h1 className="landing-logo">Zone Aveugle</h1>
       <p className="landing-subtitle">
         Ce que les autres connaissent de moi, mais dont moi je n'ai pas connaissance.<br />
-        Des équipes peuvent sembler efficaces, polies et fonctionnelles,<br />
+        <br />Des équipes peuvent sembler efficaces, polies et fonctionnelles,<br />
         tout en reproduisant des angles morts d'équité, de diversité et d'inclusion.<br />
         Explore 4 situations réalistes et vois ce que chaque réflexe change dans l'équipe !
       </p>
@@ -75,7 +75,6 @@ function SituationSelectPage({ onSelect, completedIds = [], onGoToSynthesis }) {
                   <span className="situation-check" aria-label="Complétée">✓</span>
                 )}
               </div>
-              <span className="situation-icon" aria-hidden="true">{situation.icon}</span>
               <div className="situation-content">
                 <h3 className="situation-card-title">{situation.title}</h3>
                 <p className="situation-card-desc">{situation.description}</p>
@@ -122,7 +121,7 @@ function TeamIndicators({ values, animate }) {
     { key: 'participation', label: 'Participation' },
     { key: 'equite', label: 'Équité' },
     { key: 'inclusion', label: 'Inclusion' },
-    { key: 'climat', label: 'Climat' },
+    { key: 'perspectives', label: 'Place des perspectives (diversité)' },
   ];
   return (
     <div className={`team-indicators ${animate ? 'team-indicators--visible' : ''}`}>
