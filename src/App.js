@@ -321,6 +321,88 @@ function ScenarioPage({ situation, onBack, onComplete }) {
   );
 }
 
+/* ---- Lego Heart Animation ---- */
+function LegoHeart() {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
+  const containerRef = useRef(null);
+  const hasStarted = useRef(false);
+
+  // Heart shape in a grid (1 = brick, 0 = empty)
+  const heartGrid = [
+    [0,0,1,1,0,0,0,1,1,0,0],
+    [0,1,1,1,1,0,1,1,1,1,0],
+    [1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1],
+    [0,1,1,1,1,1,1,1,1,1,0],
+    [0,0,1,1,1,1,1,1,1,0,0],
+    [0,0,0,1,1,1,1,1,0,0,0],
+    [0,0,0,0,1,1,1,0,0,0,0],
+    [0,0,0,0,0,1,0,0,0,0,0],
+  ];
+
+  const bricks = [];
+  // Build from bottom to top for a "stacking" effect
+  for (let row = heartGrid.length - 1; row >= 0; row--) {
+    for (let col = 0; col < heartGrid[row].length; col++) {
+      if (heartGrid[row][col] === 1) {
+        bricks.push({ row, col });
+      }
+    }
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted.current) {
+          hasStarted.current = true;
+          let count = 0;
+          const interval = setInterval(() => {
+            count++;
+            setVisibleCount(count);
+            if (count >= bricks.length) {
+              clearInterval(interval);
+              setTimeout(() => setShowMessage(true), 400);
+            }
+          }, 60);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [bricks.length]);
+
+  const colors = ['#e8524a', '#d94040', '#c73636', '#f25c54', '#e04848', '#d63c3c', '#ef5350', '#e53935'];
+
+  return (
+    <div className="lego-heart-section" ref={containerRef}>
+      <div className="lego-heart-grid">
+        {bricks.map((brick, i) => (
+          <div
+            key={`${brick.row}-${brick.col}`}
+            className={`lego-brick ${i < visibleCount ? 'lego-brick--visible' : ''}`}
+            style={{
+              gridRow: brick.row + 1,
+              gridColumn: brick.col + 1,
+              '--brick-color': colors[i % colors.length],
+              '--brick-delay': `${i * 0.02}s`,
+            }}
+          >
+            <div className="lego-stud" />
+          </div>
+        ))}
+      </div>
+      <div className={`lego-message ${showMessage ? 'lego-message--visible' : ''}`}>
+        <h2 className="lego-message-title">Merci d'avoir participé</h2>
+        <p className="lego-message-subtitle">Chaque pièce compte pour construire une équipe plus juste.</p>
+      </div>
+    </div>
+  );
+}
+
 function SynthesisPage({ onBackToSituations, onBackToLanding }) {
   const data = finalSynthesis;
   return (
@@ -425,7 +507,10 @@ function SynthesisPage({ onBackToSituations, onBackToLanding }) {
         </ul>
       </section>
 
-      {/* 8. Footer actions */}
+      {/* 8. Lego Heart Animation */}
+      <LegoHeart />
+
+      {/* 9. Footer actions */}
       <div className="synthesis-footer">
         <button className="synthesis-footer-primary" onClick={onBackToSituations}>
           Revoir les situations
